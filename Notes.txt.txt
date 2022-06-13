@@ -1,0 +1,12 @@
+Hi Peter,
+
+Here are retrievals of a couple of pulses we can get out of our EDFA. The brighter one is 2.02 nJ and requires an 11 cm PM1550 patch cable. The other one is 1.68 nJ and uses a 30.2 cm patch cable, which may be easier to work with. The files are organized as follows:
+
+Intensity: [time (s), intensity (Joules/time step)]
+Spectrum: [wavelength (nm), PSD (arb. units), phase (rad)]
+
+Hope this works for you and let me know if you have any questions! I've also attached the datasheet for our HNLF. I think for us the difference in dispersion doesn't matter as much but the nonlinear coefficient does.
+
+Thanks!
+
+Will
