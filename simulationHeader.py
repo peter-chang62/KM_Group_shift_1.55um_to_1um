@@ -65,6 +65,24 @@ def plot_time_evolv(sim, ax=None):
     ax.set_ylabel("cm")
 
 
+def plot_cross_section(sim, z_cm, xlims=None, ax=None):
+    if ax is None:
+        fig, ax = plt.subplots(1, 1)
+
+    z = z_cm * 1e-2
+    ind = np.argmin(abs(sim.zs - z))
+    spec = sim.AW[ind].__abs__() ** 2
+
+    if xlims is not None:
+        ll, ul = xlims
+        ll, ul = np.argmin(abs(sim.pulse.wl_um - ul)), np.argmin(abs(sim.pulse.wl_um - ll))
+
+    else:
+        ll, ul = 0, -1
+
+    ax.plot(sim.pulse.wl_um[ll:ul], spec[ll:ul])
+
+
 def video(sim, save=False, figsize=[12.18, 4.8], xlims=None):
     awevolv = fpn.get_2d_evolv(sim.AW)
     atevolv = get_2d_time_evolv(sim.AT)
@@ -122,6 +140,14 @@ adhnlf = {
     "Alpha": 0.74,
 }
 
+# other AD-HNLF
+adhnlf_2 = {
+    "D": 2.2,
+    "Dprime": 0.026,
+    "gamma": 10.5,
+    "Alpha": 0.78,
+}
+
 # OFS ND HNLF parameters
 ndhnlf = {
     "D": -2.6,
@@ -144,6 +170,14 @@ fiber_adhnlf.generate_fiber(.2,
                             adhnlf["gamma"] * 1e-3,
                             gain=dBkm_to_m(adhnlf["Alpha"]),
                             dispersion_format="D")
+
+fiber_adhnlf_2 = fpn.Fiber()
+fiber_adhnlf_2.generate_fiber(.2,
+                              1550.,
+                              [adhnlf_2["D"], adhnlf_2["Dprime"]],
+                              adhnlf_2["gamma"] * 1e-3,
+                              gain=dBkm_to_m(adhnlf_2["Alpha"]),
+                              dispersion_format="D")
 
 fiber_ndhnlf = fpn.Fiber()
 fiber_ndhnlf.generate_fiber(.2,
