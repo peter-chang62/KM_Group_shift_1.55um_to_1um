@@ -109,7 +109,7 @@ def video(sim, save=False, figsize=[12.18, 4.8], xlims=None):
         ax1.plot(sim.pulse.T_ps, atevolv[i])
         ax2.plot(sim.pulse.wl_um[ind], awevolv[i][ind])
         fig.suptitle('%.2f' % (sim.zs[i] * 100.))
-        plt.pause(.1)
+        plt.pause(.01)
 
 
 # ________________________________________________Fiber Paramters_______________________________________________________
