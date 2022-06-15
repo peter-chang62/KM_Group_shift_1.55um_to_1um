@@ -83,53 +83,6 @@ def plot_cross_section(sim, z_cm, xlims=None, ax=None):
     ax.plot(sim.pulse.wl_um[ll:ul], spec[ll:ul])
 
 
-def video(sim, save=False, figsize=[12.18, 4.8], xlims=None):
-    awevolv = fpn.get_2d_evolv(sim.AW)
-    atevolv = get_2d_time_evolv(sim.AT)
-
-    ind = (sim.pulse.wl_um > 0).nonzero()
-
-    if save:
-        plt.ioff()
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
-
-    if xlims is None:
-        xlims = [1.3, 1.9]
-
-    if save:
-        for i in range(len(sim.zs)):
-            ax1.clear()
-            ax2.clear()
-            ax2.set_xlim(*xlims)
-            ax1.set_xlim(-1, 1)
-            ax1.set_xlabel("ps")
-            ax2.set_xlabel("$\mathrm{\mu m}$")
-
-            ax1.plot(sim.pulse.T_ps, atevolv[i])
-            ax2.plot(sim.pulse.wl_um[ind], awevolv[i][ind])
-            fig.suptitle('%.2f' % (sim.zs[i] * 100.))
-            plt.savefig("fig/" + str(i) + ".png")
-
-            print(str(i + 1) + "/" + str(len(sim.zs)))
-
-        plt.ion()
-        return
-
-    for i in range(len(sim.zs)):
-        ax1.clear()
-        ax2.clear()
-        ax2.set_xlim(*xlims)
-        ax1.set_xlim(-1, 1)
-        ax1.set_xlabel("ps")
-        ax2.set_xlabel("$\mathrm{\mu m}$")
-
-        ax1.plot(sim.pulse.T_ps, atevolv[i])
-        ax2.plot(sim.pulse.wl_um[ind], awevolv[i][ind])
-        fig.suptitle('%.2f' % (sim.zs[i] * 100.))
-        plt.pause(.01)
-
-
 # ________________________________________________Fiber Paramters_______________________________________________________
 
 # Pooja said that these matched her experimental results better
@@ -140,7 +93,7 @@ adhnlf = {
     "Alpha": 0.74,
 }
 
-# other AD-HNLF
+# other AD-HNLF (from Rieker group, got parameters from Nazanin)
 adhnlf_2 = {
     "D": 2.2,
     "Dprime": 0.026,
